@@ -1,0 +1,18 @@
+{
+    "profiles": {
+        "default": {},
+        "tester":
+        {
+            "columns":{
+                "nome":"String",
+                "cognome":"String"
+            },
+
+            "sources":{
+                "nomi":"file_nomi.csv",
+                "nomi":"file_cognomi.csv"
+            }
+        }
+    },
+    "selected_profile": "tester"
+}

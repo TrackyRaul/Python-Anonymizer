@@ -2,8 +2,8 @@ class FiscalCode():
 
     def __init__(self, surname, name, date, sex):
         self.fiscal_code = ""
-        self.surname = surname.upper()
-        self.name = name.upper()
+        self.surname = surname.name.upper()
+        self.name = name.name.upper()
         self.date = date
         self.sex = sex.upper()
         self.__generate_code()
@@ -30,19 +30,19 @@ class FiscalCode():
             coding = self.name
 
         # Add last 2 digits of year
-        self.fiscal_code += str(self.date.get_year())[-2:]
+        self.fiscal_code += str(self.date.year)[-2:]
 
         # Associate month and letter
         months = ["A", "B", "C", "D", "E", "H", "L", "M", "P", "R", "S", "T"]
-        self.fiscal_code += months[self.date.get_month() - 1]
+        self.fiscal_code += months[self.date.month - 1]
 
         # Add day, plus 40 if female
         if self.sex == "FEMALE":
-            self.fiscal_code += str(self.date.get_day() + 40)
-        elif self.date.get_day() < 10:
-            self.fiscal_code += "0" + str(self.date.get_day())
+            self.fiscal_code += str(self.date.day + 40)
+        elif self.date.day < 10:
+            self.fiscal_code += "0" + str(self.date.day)
         else:
-            self.fiscal_code += str(self.date.get_day())
+            self.fiscal_code += str(self.date.day)
 
         # Add some other characters to rappresent 
         self.fiscal_code += "X"
