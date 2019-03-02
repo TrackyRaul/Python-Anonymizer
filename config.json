@@ -1,18 +1,52 @@
 {
     "profiles": {
         "default": {},
-        "tester":
-        {
-            "columns":{
-                "nome":"String",
-                "cognome":"String"
+        "new-default": {
+            "mode": "auto",
+            "file": {
+                "source":"",
+                "separator":","
             },
+            "gbl": {
+                "data_types":["Date","Mail","FiscalCode","String"],
+                "Date": {
+                    "structure": "^[0-9]{2}/[0-9]{2}/[0-9]{4}$"
 
-            "sources":{
-                "nomi":"file_nomi.csv",
-                "nomi":"file_cognomi.csv"
+                },
+                "Mail": {
+                    "structure": "^([a-zA-Z0-9_\-\.]+)@([a-zA-Z]+).([a-zA-Z]+)$"
+
+                },
+                "String": {
+                    "structure": "^[a-zA-Z]+$"
+
+                },
+                "FiscalCode": {
+                    "structure": "^([A-Z]){6}[0-9]{2}[A-Z]{1}[0-9]{2}[A-Z]{1}[0-9]{3}[A-Z]{1}$"
+
+                }
+            },
+            "fields_list": ["Nome", "Cognome", "DataNascita","Sesso", "Mail","CodiceFiscale"],
+
+            "fields": {
+                "Nome":{
+                    "replacement_file":"nomi.csv"
+                },
+                "DataNascita": {
+                    "req":["$ORIGINAL"],
+                    "offset": "+-15d+-3m+-1y"
+                },
+                "Mail": {
+                    "req":["$Nome","$Cognome","$ORIGINAL"],
+                    "structure": "$Nome.$Cognome@$ORIGINAL"
+                },
+                "CodiceFiscale":{
+                    "req":["$Nome","$Cognome","$DataNascita","$Sesso"]
+
+                }
             }
+
         }
     },
-    "selected_profile": "tester"
+    "selected_profile": "new-default"
 }

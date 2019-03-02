@@ -1,5 +1,4 @@
 from random import randint
-
 class Date():
 
     def __init__(self):

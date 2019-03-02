@@ -1,20 +1,39 @@
 from String import *
 import re
+from configurator import *
+conf = configure("config.json")
+
 
 class Mail():
-    def __init__(self, name, surname, mail):
-        self.name = name
-        self.surname = surname
-        self.domain = self.__get_domain_from_mail(mail)
-        self.mail = self.__generate_mail()
+    def __init__(self, req):
+        self.data = req
+        self.structure = ""
+        self.mail
 
-    def __get_domain_from_mail(self, mail):
-        return mail[mail.rfind('@') + 1 : ]
+    def __set_structure(self):
+        if(hasattr(conf.fields,type(self).__name__)):
+            if(hasattr(getattr(conf.fields,type(self).__name__),"structure")):
+                self.structure = getattr(conf.fields,type(self).__name__).structure
+            else:
+                raise Exception("Mail class has no strcture defined in config")
+        else:
+            raise Exception("Mail class not found ins config")
 
-    def __generate_mail(self):
-        #self.new_mail += f"{self.name}.{self.surname}@{self.domain}"
-        return "{}.{}@{}".format(self.name, self.surname, self.domain)
-    
-    def get_mail(self):
-        return self.mail
+    def __parse_ref(self,ref):
+        nref = ref
+        pattern = re.compile("^(\$[a-zA-Z]*)")
+        m = re.search(pattern,ref)
+        
+        while m:
+            m = re.search(pattern,ref)
+            placeholder = ""
+            if m:
+                found = m.group(1)
+                if(found.replace("$","") == "ORIGINAL"):
+                    placeholder = self.data[found.replace("$","")].split("@")[-1]
+                else:
+                    placeholder = self.data[found.replace("$","")]
+                nref = nref.replace(found,placeholder)
 
+
+        self.mail = nref
