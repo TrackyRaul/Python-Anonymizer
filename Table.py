@@ -47,6 +47,7 @@ class Table():
 
 
     def __filter_header(self,header,rows):
+        """Filter rows and header based on fields_list in conf"""
         filtered_header = []
         filtered_rows = []
         filtered_rows_position = []
@@ -77,6 +78,7 @@ class Table():
 
 
     def __create_entries(self,header,rows):
+        """Create entries"""
         entries = []
         for row in rows:
             original_value = {}
@@ -86,7 +88,8 @@ class Table():
             entry = Entry()
             setattr(entry,"ORIGINAL",original_value)
             for i in range(len(header)):
-                object = self.data_types[header[i]](row[i])
+                #Give each object in entry the referenced class type(does not instantiate)
+                object = self.data_types[header[i]]#(row[i])
                 setattr(entry,header[i],object)
             entries.append(entry)
         

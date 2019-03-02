@@ -4,6 +4,7 @@ from configurator import *
 conf = configure("config.json")
 
 class Entry(object):
+    
 
     def anonymize(self):
         req = []
