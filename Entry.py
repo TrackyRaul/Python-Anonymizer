@@ -19,12 +19,12 @@ class Entry(object):
     
 
     def __objectify(self,value):
-
+        
+        '''
         return_value = None
         mail_pattern = re.compile("^([a-zA-Z0-9_\-\.]+)@([a-zA-Z]+).([a-zA-Z]+)$")
         fiscal_code_pattern = re.compile("^([A-Z]){6}[0-9]{2}[A-Z]{1}[0-9]{2}[A-Z]{1}[0-9]{3}[A-Z]{1}$")
         date_pattern = re.compile("^[0-9]{2}/[0-9]{2}/[0-9]{4}$")
         string_pattern = re.compile("^[a-zA-Z]+$")
-        '''if(mail_pattern.match(value)):
-            return_value = 
         '''
+        
