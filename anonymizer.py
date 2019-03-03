@@ -1,10 +1,9 @@
-from String import *
-from Date import *
-from Mail import *
+import Table
 
 
 def main():
-    s = String("test","test.csv")
+    t = Table.Table()
+    
 
 
 if __name__ == "__main__":
