@@ -1,7 +1,4 @@
-#from Entry import *
-from FiscalCode import *
-from Date import *
-from String import *
+
 
 
 if __name__ == "__main__":

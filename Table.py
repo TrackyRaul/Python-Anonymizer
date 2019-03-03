@@ -1,102 +1,62 @@
-from Entry import *
-from configurator import *
-import re
-import String,Date,FiscalCode
+import configurator
+from modules import Mail, Date, FiscalCode, String
+conf = configurator.configure("config.json")
 
-
-conf = configure("config.json")
 
 class Table():
     def __init__(self):
-        self.header = []
+        """Attributes"""
         self.entries = []
-        self.data_types = {}
-        self.file_name = conf.file.source
-        self.mode = conf.mode
+        self.header = []
+        self.file_info = conf.file
+        self.glb_info = conf.gbl
+        """Load data from file"""
+        self.header = self.__load_file()[0]
+        self.rows = self.__load_file()[1]
 
-        self.__load_file_data()
+        """Filter header and rows based on header specified in configuration file"""
+        self.header = self.__filter_info(self.header, self.rows)[0]
+        self.rows = self.__filter_info(self.header, self.rows)[1]
 
-    def __load_file_data(self):
-        header = []
+        # print(self.header,self.rows)
+
+    def __load_file(self):
+        """Load data from files"""
         rows = []
+        header = []
         try:
-            with open(self.file_name,"r") as file:
+            with open(self.file_info.source, "r") as file:
                 h = True
                 for line in file:
-                    line = line.replace("\n","")
-                    line = line.split(conf.file.separator)
+                    line = line.replace("\n", "")
+                    line = line.split(self.file_info.separator)
                     if h:
-                        header.append(line)
+                        header = line
                         h = False
                     else:
                         rows.append(line)
+        except Exception as ex:
+            print(ex)
 
+        return (rows, header)
 
-
-        except Exception as e:
-            print(e)
-
-        if(header != [] and rows != []):
-            header = self.__filter_header(header,rows)[0]
-            rows = self.__filter_header(header,rows)[1]
-        else:
-            raise Exception("Failed to load data!")
-
-        self.header = header
-        self.__auto_data_types(header,rows)
-
-
-    def __filter_header(self,header,rows):
-        """Filter rows and header based on fields_list in conf"""
-        filtered_header = []
-        filtered_rows = []
-        filtered_rows_position = []
-
+    def __filter_info(self, header, rows):
+        """Filter header and rows based on configuration file"""
+        ref_header = conf.fields_list
+        new_header_indexes = []
+        new_header = []
+        new_rows = []
         for i in range(len(header)):
-            if header[i] in conf.fields_list:
-                filtered_header.append(header[i])
-                filtered_rows_position.append(i)
-        
+            if header[i] in ref_header:
+                new_header_indexes.append(i)
+                new_header.append(header[i])
+
         for row in rows:
             new_row = []
             for i in range(len(row)):
-                if(i in filtered_rows_position):
+                if(i in new_header_indexes):
                     new_row.append(row[i])
 
-        return (filtered_header,filtered_rows)
+            new_rows.append(new_row)
 
-
-    def __auto_data_types(self,header,rows):
-        """Set data types based on configuration file"""
-        sample_row = rows[0]
-        for i in range(len(header)):
-            for type in conf.gbl.data_types:
-                pattern = re.compile(getattr(conf.gbl,type).structure)
-                if pattern.match(sample_row[i]):
-                    self.data_types[header[i]] = globals()[type]
-                    break
-
-
-    def __create_entries(self,header,rows):
-        """Create entries"""
-        entries = []
-        for row in rows:
-            original_value = {}
-            for i in range(len(header)):
-                original_value[header[i]] = row[i] 
-
-            entry = Entry()
-            setattr(entry,"ORIGINAL",original_value)
-            for i in range(len(header)):
-                #Give each object in entry the referenced class type(does not instantiate)
-                object = self.data_types[header[i]]#(row[i])
-                setattr(entry,header[i],object)
-            entries.append(entry)
-        
-        self.entries = entries
-
-
-        
-    def anonymize(self):
-        for entry in self.entries:
-            entry.anonymize()
+        return(new_header, new_rows)
