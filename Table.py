@@ -18,7 +18,7 @@ class Table():
         self.header = self.__filter_info(self.header, self.rows)[0]
         self.rows = self.__filter_info(self.header, self.rows)[1]
 
-        # print(self.header,self.rows)
+        print(self.header,self.rows)
 
     def __load_file(self):
         """Load data from files"""
@@ -37,8 +37,7 @@ class Table():
                         rows.append(line)
         except Exception as ex:
             print(ex)
-
-        return (rows, header)
+        return (header,rows)
 
     def __filter_info(self, header, rows):
         """Filter header and rows based on configuration file"""
