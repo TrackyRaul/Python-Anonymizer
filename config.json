@@ -34,7 +34,7 @@
                     
                 },
                 "DataNascita": {
-                    "req":["$ORIGINAL"],
+                    "req":["$ORIGINAL.Data"],
                     "offset": "+-15d+-3m+-1y"
                 },
                 "Mail": {
