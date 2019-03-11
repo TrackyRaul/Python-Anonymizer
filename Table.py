@@ -28,8 +28,8 @@ class Table():
         # Set header column types
         self.column_types = self.__get_column_types(self.header, self.rows)
 
-        self.entries = self.__create_entries(
-            self.header, self.rows, self.column_types)
+        #Generate entries objects
+        self.entries = self.__create_entries(self.header, self.rows, self.column_types)
 
     def __load_file(self):
         """Load data from files"""
@@ -130,3 +130,9 @@ class Table():
 
             entries.append(temp_entry)
         return entries
+
+
+    def __anonymize(self):
+        """Anonymize each entry"""
+        for entry in self.entries:
+            entry.anonymize()
