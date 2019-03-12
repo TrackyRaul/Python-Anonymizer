@@ -35,10 +35,12 @@ class Entry():
         return req
 
     def print(self,separator = ","):
+        """Print the entry as a string"""
         values = []
+        #Get attributes and add the values to list
         for attr in conf.fields_list:
             values.append(getattr(self,attr).value)
-        
+        #Turn to string and print it
         values = separator.join(values)
         print(values)
 
