@@ -12,9 +12,12 @@ class String():
 
 
     def anonymize(self,requirements):
+        """Anonymize the string based on given file"""
         random_value = ""
         values = []
         req = requirements
+
+        #Choose a random word from file and set value
 
         with open(self.replacement_file_name,"r") as file:
             for line in file:
