@@ -31,6 +31,9 @@ class Table():
         #Generate entries objects
         self.entries = self.__create_entries(self.header, self.rows, self.column_types)
 
+        self.__anonymize()
+        self.entries[0].print()
+
     def __load_file(self):
         """Load data from files"""
         rows = []
@@ -126,7 +129,7 @@ class Table():
             for i in range(len(header)):
                 # Create an instance of class defined of type defined in the types dict
                 # As a parameter set the original value of the cell
-                setattr(temp_entry, header[i], types[header[i]](row[i]))
+                setattr(temp_entry, header[i], types[header[i]](header[i],row[i]))
 
             entries.append(temp_entry)
         return entries
