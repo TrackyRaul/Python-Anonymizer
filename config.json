@@ -26,12 +26,18 @@
 
                 }
             },
-            "fields_list": ["Nome","Cognome","Data"],
+            "fields_list": ["Nome","Cognome"],
 
             "fields": {
                 "Nome":{
-                    "replacement_file":"nomi.csv"
+                    "replacement_file":"nomi.csv",
+                    "separator":","
                     
+                },
+                "Cognome":{
+                    "replacement_file":"cognomi.csv",
+                    "separator":","
+
                 },
                 "DataNascita": {
                     "req":["$ORIGINAL.Data"],
