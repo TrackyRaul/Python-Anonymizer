@@ -3,3 +3,6 @@ class Date():
         self.field_name = field_name
         self.value = None
         self.original_value = original_value
+    
+    def anonymize(self,requirements):
+        pass
