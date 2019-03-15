@@ -33,7 +33,7 @@ class Table():
         self.entries = self.__create_entries(self.header, self.rows, self.column_types)
 
         self.__anonymize()
-        #self.entries[0].print()
+        self.entries[0].print()
 
     def __load_file(self):
         """Load data from files"""
