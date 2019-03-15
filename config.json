@@ -26,7 +26,7 @@
 
                 }
             },
-            "fields_list": ["Nome","Cognome"],
+            "fields_list": ["Nome","Cognome","Sesso","DataNascita","CodiceFiscale"],
 
             "fields": {
                 "Nome":{
@@ -40,7 +40,7 @@
 
                 },
                 "DataNascita": {
-                    "req":["$ORIGINAL.Data"],
+                    "req":["$ORIGINAL.DataNascita"],
                     "offset": "+-15d+-3m+-1y"
                 },
                 "Mail": {
@@ -48,9 +48,18 @@
                     "structure": "$Nome.$Cognome@$ORIGINAL"
                 },
                 "CodiceFiscale":{
-                    "req":["$Nome","$Cognome","$DataNascita","$Sesso"]
+                    "req":["$Nome","$Cognome","$DataNascita","$Sesso"],
+                    "name":"$Nome",
+                    "surename":"$Cognome",
+                    "sex":"$Sesso",
+                    "birthdate":"$DataNascita"
 
+                },
+                "Sesso":{
+                    "replacement_file":"nomi.csv",
+                    "separator":","
                 }
+
             }
 
         }
