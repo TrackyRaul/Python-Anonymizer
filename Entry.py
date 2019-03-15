@@ -32,7 +32,7 @@ class Entry():
                     req[req_ref[i]] = getattr(self,req_ref[i].replace("$","").split(".")[1]).original_value
                 else:
                     #Set the value with the new value of the refferenced variable
-                    req[req_ref[i]] = getattr(self,req_ref[i].replace("$","")).value
+                    req[req_ref[i]] = getattr(self,req_ref[i].replace("$",""))
         return req
 
     def print(self,separator = ","):

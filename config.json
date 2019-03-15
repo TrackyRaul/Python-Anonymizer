@@ -56,8 +56,7 @@
 
                 },
                 "Sesso":{
-                    "replacement_file":"nomi.csv",
-                    "separator":","
+                    "replacement_choices":["M","F"]
                 }
 
             }
