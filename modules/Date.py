@@ -13,7 +13,7 @@ class Date():
         self.month = None
         self.day = None
         #self.value = self.original_value
-        #self.__update_date_value()
+        # self.__update_date_value()
 
     def __update_date_parts(self):
         """Update single parts of date"""
@@ -26,6 +26,8 @@ class Date():
         day = self.day
         month = self.month
         year = self.year
+        # Reformat string
+
         if day < 10:
             day = "0"+str(day)
         else:
@@ -39,8 +41,12 @@ class Date():
         self.value = f"{day}/{month}/{year}"
 
     def random_anonymize(self, value, pattern):
+        #Anonymize dates randomly based on a pattern
         pattern = pattern.replace("r", "")
         nvalue = value
+
+        """Consider the case where you eather sum or substract a random number
+        to the value of the date"""
         if "+-" in pattern or "-+" in pattern:
             temp_pattern = pattern.replace("+-", "")
             temp_pattern = pattern.replace("-+", "")
@@ -50,6 +56,7 @@ class Date():
 
             value_interval = [int(x) for x in value_interval[0].split(",")]
 
+            #Decide between sum or subraction
             coin_toss = random.choice([0, 1])
 
             if coin_toss == 1:
@@ -57,8 +64,9 @@ class Date():
             else:
                 nvalue -= random.randint(value_interval[0], value_interval[1])
 
+        #Consider the case of the sum
         elif "+" in pattern:
-            temp_pattern = pattern.replace("+","")
+            temp_pattern = pattern.replace("+", "")
             value_interval = re.findall("\((.*?)\)", temp_pattern)
             if len(value_interval) != 1:
                 raise Exception("Date random anonymize error!")
@@ -67,8 +75,9 @@ class Date():
 
             nvalue += random.randint(value_interval[0], value_interval[1])
 
+        #Consider the case of the subtraction
         elif "-" in pattern:
-            temp_pattern = pattern.replace("-","")
+            temp_pattern = pattern.replace("-", "")
             value_interval = re.findall("\((.*?)\)", temp_pattern)
             if len(value_interval) != 1:
                 raise Exception("Date random anonymize error!")
@@ -76,6 +85,8 @@ class Date():
             value_interval = [int(x) for x in value_interval]
 
             nvalue -= random.randint(value_interval[0], value_interval[1])
+
+        #Set a random value between range
         else:
             value_interval = re.findall("\((.*?)\)", pattern)[0].split(",")
             value_interval = [int(x) for x in value_interval]
@@ -96,31 +107,42 @@ class Date():
             raise Exception("Date type needs specific configuration in types!")
 
     def anonymize(self, requirements):
+        """Anonymize date based on configuration"""
         ref_date = requirements[(getattr(conf.fields, self.field_name).req)[0]]
         ref_date = ref_date.split("/")
+        
+        #Check if valid
         if len(ref_date) != 3:
             raise Exception("Date passed in requirements not valid!")
         ref_day = int(ref_date[0])
-        ref_month = int(ref_date[0])
+        ref_month = int(ref_date[1])
         ref_year = int(ref_date[2])
 
+        #Check if it should be randomized
         if "r" in getattr(conf.fields, self.field_name).day:
 
             self.day = self.random_anonymize(ref_day, getattr(
                 conf.fields, self.field_name).day)
-            if self.day > 30:
-                self.day %= 30
+            
+            
         elif getattr(conf.fields, self.field_name).day == "":
             self.day = ref_day
+
+        if self.day > 30:
+                self.day %= 30
+
         if "r" in getattr(conf.fields, self.field_name).month:
 
             self.month = self.random_anonymize(ref_month, getattr(
                 conf.fields, self.field_name).month)
 
-            if self.month > 12:
-                self.month %= 12
+            
         elif getattr(conf.fields, self.field_name).month == "":
             self.month = ref_month
+
+        if self.month > 12:
+                self.month %= 12
+
         if "r" in getattr(conf.fields, self.field_name).year:
             self.year = self.random_anonymize(ref_year, getattr(
                 conf.fields, self.field_name).year)
