@@ -41,6 +41,7 @@ class String():
             while random_value == self.original_value or random_value == "":
                 random_value = random.choice(line)
 
+            random_value = random_value.replace(" ","")
             self.value = random_value
 
 
