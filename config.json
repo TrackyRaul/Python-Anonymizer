@@ -41,7 +41,9 @@
                 },
                 "DataNascita": {
                     "req":["$ORIGINAL.DataNascita"],
-                    "offset": "+-15d+-3m+-1y"
+                    "day":"r+-(5,15)",
+                    "month":"r+-(2,12)",
+                    "year":""
                 },
                 "Mail": {
                     "req":["$Nome","$Cognome","$ORIGINAL"],
