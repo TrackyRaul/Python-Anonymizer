@@ -9,11 +9,11 @@ class Date():
         self.field_name = field_name
         self.value = original_value
         self.original_value = original_value
-        self.year = 2019
-        self.month = 12
-        self.day = 10
-        self.value = self.original_value
-        self.__update_date_value()
+        self.year = None
+        self.month = None
+        self.day = None
+        #self.value = self.original_value
+        #self.__update_date_value()
 
     def __update_date_parts(self):
         """Update single parts of date"""
@@ -58,24 +58,28 @@ class Date():
                 nvalue -= random.randint(value_interval[0], value_interval[1])
 
         elif "+" in pattern:
-            temp_pattern = pattern.replace("+")
+            temp_pattern = pattern.replace("+","")
             value_interval = re.findall("\((.*?)\)", temp_pattern)
             if len(value_interval) != 1:
                 raise Exception("Date random anonymize error!")
-            value_interval = value_interval.split(",")
+            value_interval = value_interval[0].split(",")
+            value_interval = [int(x) for x in value_interval]
 
             nvalue += random.randint(value_interval[0], value_interval[1])
 
         elif "-" in pattern:
-            temp_pattern = pattern.replace("-")
+            temp_pattern = pattern.replace("-","")
             value_interval = re.findall("\((.*?)\)", temp_pattern)
             if len(value_interval) != 1:
                 raise Exception("Date random anonymize error!")
-            value_interval = value_interval.split(",")
+            value_interval = value_interval[0].split(",")
+            value_interval = [int(x) for x in value_interval]
 
             nvalue -= random.randint(value_interval[0], value_interval[1])
         else:
-            raise Exception("No valid pattern found in date anonymization!")
+            value_interval = re.findall("\((.*?)\)", pattern)[0].split(",")
+            value_interval = [int(x) for x in value_interval]
+            nvalue = random.randint(value_interval[0], value_interval[1])
 
         return nvalue
 
@@ -103,14 +107,24 @@ class Date():
         if "r" in getattr(conf.fields, self.field_name).day:
 
             self.day = self.random_anonymize(ref_day, getattr(
-                conf.fields, self.field_name).day) % 32
-
+                conf.fields, self.field_name).day)
+            if self.day > 30:
+                self.day %= 30
+        elif getattr(conf.fields, self.field_name).day == "":
+            self.day = ref_day
         if "r" in getattr(conf.fields, self.field_name).month:
 
             self.month = self.random_anonymize(ref_month, getattr(
-                conf.fields, self.field_name).month) % 13
+                conf.fields, self.field_name).month)
+
+            if self.month > 12:
+                self.month %= 12
+        elif getattr(conf.fields, self.field_name).month == "":
+            self.month = ref_month
         if "r" in getattr(conf.fields, self.field_name).year:
-            self.day = self.random_anonymize(ref_day, getattr(
-                conf.fields, self.field_name).year) % 3000
+            self.year = self.random_anonymize(ref_year, getattr(
+                conf.fields, self.field_name).year)
+        elif getattr(conf.fields, self.field_name).year == "":
+            self.year = ref_year
 
         self.__update_date_value()

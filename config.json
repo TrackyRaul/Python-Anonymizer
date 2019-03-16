@@ -41,8 +41,8 @@
                 },
                 "DataNascita": {
                     "req":["$ORIGINAL.DataNascita"],
-                    "day":"r+-(5,15)",
-                    "month":"r+-(2,12)",
+                    "day":"r+(5,15)",
+                    "month":"r-(2,12)",
                     "year":""
                 },
                 "Mail": {
