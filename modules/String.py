@@ -1,6 +1,8 @@
-import configurator
+from config import configurator
 import random
-conf = configurator.configure("config.json")
+
+
+conf = configurator.configure("./config/config.json")
 
 
 class String():

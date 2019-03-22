@@ -44,7 +44,7 @@ def configure(file_name):
     ''' Load selected profile and return it after checking its validity'''
     config_data = None
     return_profile = None
-    if(not file_exists(file_name)):
+    if(file_exists(file_name)):
         print("Configuration file does not exist!")
     else:
         with open(file_name,"r") as f:

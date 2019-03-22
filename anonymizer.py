@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 
 # Libraries
+from modules import *
+from config import Table
+from config import configurator
 from shutil import copyfile
 import argparse
-import Table 
 import textwrap 
 
 
@@ -12,14 +14,14 @@ parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpForm
     description=textwrap.dedent('''\
     Python Anonymizer - v1.0
     -------------------------------------------------------------------------
-      ___                                                 _                  
-     / _ \                                               (_)                 
-    / /_\ \ _ __    ___   _ __   _   _  _ __ ___   _   _  _  ____  ___  _ __ 
-    |  _  || '_ \  / _ \ | '_ \ | | | || '_ ` _ \ | | | || ||_  / / _ \| '__|
-    | | | || | | || (_) || | | || |_| || | | | | || |_| || | / / |  __/| |   
-    \_| |_/|_| |_| \___/ |_| |_| \__, ||_| |_| |_| \__, ||_|/___| \___||_|   
-                                  __/ |             __/ |                    
-                                 |___/             |___/        
+      ___                                          _                  
+     / _ \                                        (_)                 
+    / /_\ \ _ __    ___   _ __   _   _  _ __ ___   _  ____  ___  _ __ 
+    |  _  || '_ \  / _ \ | '_ \ | | | || '_ ` _ \ | ||_  / / _ \| '__|
+    | | | || | | || (_) || | | || |_| || | | | | || | / / |  __/| |   
+    \_| |_/|_| |_| \___/ |_| |_| \__, ||_| |_| |_||_|/___| \___||_|   
+                                  __/ |                               
+                                 |___/                                
 
     -------------------------------------------------------------------------          
     '''))
@@ -44,16 +46,15 @@ def main():
         pass
     else:
         # Export the configuration file
-        copyfile('.//config//config.json', args.save_config[0])
+        copyfile('./config/config.json', args.save_config[0])
 
-
-    '''
+    
     t = Table.Table()
 
     # Test
     for entry in t.entries:
         entry.print()
-    '''
+    
     
 
 

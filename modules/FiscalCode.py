@@ -1,5 +1,7 @@
-import configurator
-conf = configurator.configure("config.json")
+from config import configurator
+
+
+conf = configurator.configure("./config/config.json")
 
 class FiscalCode():
     def __init__(self,field_name,original_value):

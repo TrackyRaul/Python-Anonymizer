@@ -1,12 +1,13 @@
-import configurator
-from modules.Date import *
-from modules.String import *
-from modules.FiscalCode import *
 import re
-from Entry import Entry
+from config import configurator
+from config.Entry import *
+from modules.String import *
+from modules.Date import *
+from modules.FiscalCode import *
+from modules.Mail import *
 
 
-conf = configurator.configure("config.json")
+conf = configurator.configure("./config/config.json")
 
 
 class Table():

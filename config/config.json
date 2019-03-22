@@ -30,12 +30,12 @@
 
             "fields": {
                 "Nome":{
-                    "replacement_file":"nomi.csv",
+                    "replacement_file":"./config/nomi.csv",
                     "separator":","
                     
                 },
                 "Cognome":{
-                    "replacement_file":"cognomi.csv",
+                    "replacement_file":"./config/cognomi.csv",
                     "separator":","
 
                 },
