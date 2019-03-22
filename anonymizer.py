@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
 # Libraries
-import Table
-import argparse
-import textwrap
+from shutil import copyfile
+from argparse import *
+from Table import *
+from textwrap import *
 
 
 # Arguments parser
@@ -23,7 +24,7 @@ parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpForm
     -------------------------------------------------------------------------          
     '''))
 mutually_group = parser.add_mutually_exclusive_group(required=True)
-mutually_group.add_argument('-a', '--anonymize', nargs=1, metavar='FILENAME', help='\
+mutually_group.add_argument('-a', '--anonymize', nargs=2, metavar=('FILENAME', 'OUTPUT'), help='\
     anonymize data from a CSV file and write the output on another file')
 mutually_group.add_argument('-c', '--config', action='store_true', help='\
     open a web browser to configure the anonymizer')
@@ -35,12 +36,24 @@ parser.add_argument('-v', '--version', action='version', version='Python Anonymi
 def main():
 
     args = parser.parse_args()
+    if args.anonymize != None:
+        # Anonymize input csv file and export the result 
+        pass
+    elif args.config:
+        # Open web browser to edit the configuration file
+        pass
+    else:
+        # Export the configuration file
+        copyfile('.//config//config.json', args.save_config[0])
 
+
+    '''
     t = Table.Table()
 
     # Test
     for entry in t.entries:
         entry.print()
+    '''
     
 
 
