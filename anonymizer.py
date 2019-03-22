@@ -2,9 +2,9 @@
 
 # Libraries
 from shutil import copyfile
-from argparse import *
-from Table import *
-from textwrap import *
+import argparse
+import Table 
+import textwrap 
 
 
 # Arguments parser
