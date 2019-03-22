@@ -1,5 +1,8 @@
-import configurator, re
-conf = configurator.configure("config.json")
+import re
+from config import configurator
+
+
+conf = configurator.configure("./config/config.json")
 
 class Entry():
     def __init__(self):

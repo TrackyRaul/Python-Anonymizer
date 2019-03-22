@@ -1,7 +1,9 @@
-import configurator
+from config import configurator
 import re
 import random
-conf = configurator.configure("config.json")
+
+
+conf = configurator.configure("./config/config.json")
 
 
 class Date():
