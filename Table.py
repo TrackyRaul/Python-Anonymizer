@@ -5,10 +5,12 @@ from modules.FiscalCode import *
 import re
 from Entry import Entry
 
+
 conf = configurator.configure("config.json")
 
 
 class Table():
+
     def __init__(self):
         """Attributes"""
         self.entries = []
@@ -29,11 +31,13 @@ class Table():
         # Set header column types
         self.column_types = self.__get_column_types(self.header, self.rows)
 
-        #Generate entries objects
-        self.entries = self.__create_entries(self.header, self.rows, self.column_types)
+        # Generate entries objects
+        self.entries = self.__create_entries(
+            self.header, self.rows, self.column_types)
 
         self.__anonymize()
-        self.entries[0].print()
+        # self.entries[0].print()
+
 
     def __load_file(self):
         """Load data from files"""
@@ -53,6 +57,7 @@ class Table():
         except Exception as ex:
             print(ex)
         return (header, rows)
+
 
     def __filter_info(self, header, rows):
         """Filter header and rows based on configuration file"""
@@ -74,6 +79,7 @@ class Table():
             new_rows.append(new_row)
 
         return(new_header, new_rows)
+
 
     def __get_column_types(self, header, rows):
         """Read from configuration the types or calculate them based on regex"""
@@ -100,11 +106,13 @@ class Table():
 
         return types
 
+
     def __exist_column_conf(self, column):
         """Check if field has costum configuration"""
         return_value = False
         if hasattr(conf.fields, column):
             return_value = True
+
 
     def __get_type_from_regex(self, column, sample_row_value):
         """Given a string get the type of the string based on regex"""
@@ -121,6 +129,7 @@ class Table():
             raise Exception(f"Type could not be found for {column}")
         return return_type
 
+
     def __create_entries(self, header, rows, types):
         entries = []
         # Consider each row
@@ -130,7 +139,8 @@ class Table():
             for i in range(len(header)):
                 # Create an instance of class defined of type defined in the types dict
                 # As a parameter set the original value of the cell
-                setattr(temp_entry, header[i], types[header[i]](header[i],row[i]))
+                setattr(temp_entry, header[i],
+                        types[header[i]](header[i], row[i]))
 
             entries.append(temp_entry)
         return entries
