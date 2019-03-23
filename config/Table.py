@@ -12,18 +12,22 @@ conf = configurator.configure("./config/config.json")
 
 class Table():
 
-    def __init__(self):
+    def __init__(self,infname,outfname,separator = ","):
         """Attributes"""
         self.entries = []
         self.header = []
         self.column_types = {}
-        self.file_info = conf.file
+        self.in_file_name = infname
+        self.out_file_name = outfname
+        self.file_separator = separator
         self.glb_info = conf.gbl
 
+        
+
+    def start(self):
         # Load data from file
         self.header = self.__load_file()[0]
         self.rows = self.__load_file()[1]
-
         # Filter header and rows based on header specified in configuration file
         filtered_info = self.__filter_info(self.header, self.rows)
         self.header = filtered_info[0]
@@ -37,7 +41,10 @@ class Table():
             self.header, self.rows, self.column_types)
 
         self.__anonymize()
-        # self.entries[0].print()
+        
+        #Write to file
+        temp_rows = [x.print(self.file_separator) for x in self.entries]
+        self.__write_to_file(",".join(self.header),temp_rows,self.out_file_name)
 
 
     def __load_file(self):
@@ -45,11 +52,11 @@ class Table():
         rows = []
         header = []
         try:
-            with open(self.file_info.source, "r") as file:
+            with open(self.in_file_name, "r") as file:
                 h = True
                 for line in file:
                     line = line.replace("\n", "")
-                    line = line.split(self.file_info.separator)
+                    line = line.split(self.file_separator)
                     if h:
                         header = line
                         h = False
@@ -58,6 +65,17 @@ class Table():
         except Exception as ex:
             print(ex)
         return (header, rows)
+
+    def __write_to_file(self,header,rows,filename):
+        try:
+            with open(filename,"w") as file:
+                content = header + "\n"
+                for row in rows:
+                    content += row + "\n"
+
+                file.write(content)
+        except Exception as ex:
+            print(ex)
 
 
     def __filter_info(self, header, rows):
