@@ -53,7 +53,7 @@ def main():
 
     # Test
     for entry in t.entries:
-        entry.print()
+        print(entry.print())
     
     
 
