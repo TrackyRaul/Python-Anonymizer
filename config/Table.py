@@ -67,6 +67,7 @@ class Table():
         return (header, rows)
 
     def __write_to_file(self,header,rows,filename):
+        """Write data to file"""
         try:
             with open(filename,"w") as file:
                 content = header + "\n"
