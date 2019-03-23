@@ -46,6 +46,6 @@ class Entry():
             values.append(getattr(self,attr).value)
         #Turn to string and print it
         values = separator.join(values)
-        print(values)
+        return values
 
 

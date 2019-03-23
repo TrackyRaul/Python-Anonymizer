@@ -4,7 +4,7 @@
         "new-default": {
             "mode": "auto",
             "file": {
-                "source":"test.csv",
+                "source":"",
                 "separator":","
             },
             "gbl": {
@@ -26,7 +26,7 @@
 
                 }
             },
-            "fields_list": ["Nome","Cognome","Sesso","DataNascita","CodiceFiscale","DataIscrizione"],
+            "fields_list": ["Nome","Cognome","Mail","Sesso","DataNascita","CodiceFiscale","DataIscrizione"],
 
             "fields": {
                 "Nome":{
@@ -46,8 +46,9 @@
                     "year":""
                 },
                 "Mail": {
-                    "req":["$Nome","$Cognome","$ORIGINAL"],
-                    "structure": "$Nome.$Cognome@$ORIGINAL"
+                    "req":["$Nome","$Cognome","$ORIGINAL.Mail"],
+                    "structure": "$Nome.$Cognome@domain",
+                    "domain":"yahoo.it"
                 },
                 "CodiceFiscale":{
                     "req":["$Nome","$Cognome","$DataNascita","$Sesso"],

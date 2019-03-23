@@ -48,8 +48,8 @@ def main():
         # Export the configuration file
         copyfile('./config/config.json', args.save_config[0])
 
-    
-    t = Table.Table()
+    t = Table.Table(args.anonymize[0],args.anonymize[1])
+    t.start()
 
     # Test
     for entry in t.entries:
