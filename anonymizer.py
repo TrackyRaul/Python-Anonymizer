@@ -40,20 +40,17 @@ def main():
     args = parser.parse_args()
     if args.anonymize != None:
         # Anonymize input csv file and export the result
-        pass
+        t = Table.Table(args.anonymize[0], args.anonymize[1])
+        t.start()
+
     elif args.config:
         # Open web browser to edit the configuration file
+        print("This feature has not been implemented yet! Sorry")
         pass
+        
     else:
         # Export the configuration file
         copyfile('./config/config.json', args.save_config[0])
-
-    t = Table.Table(args.anonymize[0], args.anonymize[1])
-    t.start()
-
-    # Test
-    for entry in t.entries:
-        print(entry.print())
 
 
 if __name__ == '__main__':
