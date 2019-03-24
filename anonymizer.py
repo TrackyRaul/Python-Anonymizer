@@ -38,19 +38,25 @@ parser.add_argument('-v', '--version', action='version',
 
 def main():
     args = parser.parse_args()
-    if args.anonymize != None:
-        # Anonymize input csv file and export the result
-        t = Table.Table(args.anonymize[0], args.anonymize[1])
-        t.start()
 
-    elif args.config:
-        # Open web browser to edit the configuration file
-        print("This feature has not been implemented yet! Sorry")
-        pass
-        
-    else:
-        # Export the configuration file
-        copyfile('./config/config.json', args.save_config[0])
+    try:
+        if args.anonymize != None:
+            # Anonymize input csv file and export the result
+            t = Table.Table(args.anonymize[0], args.anonymize[1])
+            t.start()
+
+        elif args.config:
+            # Open web browser to edit the configuration file
+            print("This feature has not been implemented yet! Sorry")
+            pass
+            
+        else:
+            # Export the configuration file
+            copyfile('./config/config.json', args.save_config[0])
+    except Exception as e:
+        print("Fatal error.", e)
+    finally:
+        print("Program terminated")
 
 
 if __name__ == '__main__':
