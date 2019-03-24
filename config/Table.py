@@ -12,7 +12,7 @@ conf = configurator.configure("./config/config.json")
 
 class Table():
 
-    def __init__(self,infname,outfname,separator = ","):
+    def __init__(self, infname, outfname, separator=","):
         """Attributes"""
         self.entries = []
         self.header = []
@@ -22,7 +22,6 @@ class Table():
         self.file_separator = separator
         self.glb_info = conf.gbl
 
-        
 
     def start(self):
         # Load data from file
@@ -41,10 +40,11 @@ class Table():
             self.header, self.rows, self.column_types)
 
         self.__anonymize()
-        
+
         #Write to file
         temp_rows = [x.print(self.file_separator) for x in self.entries]
-        self.__write_to_file(",".join(self.header),temp_rows,self.out_file_name)
+        self.__write_to_file(",".join(self.header),
+                             temp_rows, self.out_file_name)
 
 
     def __load_file(self):
@@ -66,10 +66,11 @@ class Table():
             print(ex)
         return (header, rows)
 
-    def __write_to_file(self,header,rows,filename):
+
+    def __write_to_file(self, header, rows, filename):
         """Write data to file"""
         try:
-            with open(filename,"w") as file:
+            with open(filename, "w") as file:
                 content = header + "\n"
                 for row in rows:
                     content += row + "\n"
@@ -138,7 +139,7 @@ class Table():
         """Given a string get the type of the string based on regex"""
         return_type = None
         for type in conf.gbl.data_types:
-            # Get patter from configuration file
+            # Get pattern from configuration file
             pattern = re.compile(getattr(conf.gbl, type).structure)
             if pattern.match(sample_row_value):
                 # Check for all available types if one matches
@@ -164,7 +165,6 @@ class Table():
 
             entries.append(temp_entry)
         return entries
-
 
     def __anonymize(self):
         """Anonymize each entry"""
