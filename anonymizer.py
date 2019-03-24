@@ -6,12 +6,12 @@ from config import Table
 from config import configurator
 from shutil import copyfile
 import argparse
-import textwrap 
+import textwrap
 
 
 # Arguments parser
 parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,
-    description=textwrap.dedent('''\
+                                 description=textwrap.dedent('''\
     Python Anonymizer - v1.0
     -------------------------------------------------------------------------
       ___                                          _                  
@@ -32,14 +32,14 @@ mutually_group.add_argument('-c', '--config', action='store_true', help='\
     open a web browser to configure the anonymizer')
 mutually_group.add_argument('-s', '--save-config', nargs=1, metavar='FILENAME', help='\
     save anonymizer configuration on a json file')
-parser.add_argument('-v', '--version', action='version', version='Python Anonymizer - v1.0')
+parser.add_argument('-v', '--version', action='version',
+                    version='Python Anonymizer - v1.0')
 
 
 def main():
-
     args = parser.parse_args()
     if args.anonymize != None:
-        # Anonymize input csv file and export the result 
+        # Anonymize input csv file and export the result
         pass
     elif args.config:
         # Open web browser to edit the configuration file
@@ -48,14 +48,12 @@ def main():
         # Export the configuration file
         copyfile('./config/config.json', args.save_config[0])
 
-    t = Table.Table(args.anonymize[0],args.anonymize[1])
+    t = Table.Table(args.anonymize[0], args.anonymize[1])
     t.start()
 
     # Test
     for entry in t.entries:
         print(entry.print())
-    
-    
 
 
 if __name__ == '__main__':
