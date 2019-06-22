@@ -1,6 +1,7 @@
 import re
+import sys
 from config import configurator
-from config.Entry import *
+from modules.Entry import *
 from modules.String import *
 from modules.Date import *
 from modules.FiscalCode import *
@@ -166,7 +167,22 @@ class Table():
             entries.append(temp_entry)
         return entries
 
+    
+    def progress(self, count, total, suffix=''):
+        bar_len = 60
+        filled_len = int(round(bar_len * count / float(total)))
+        percents = round(100.0 * count / float(total), 1)
+        bar = '=' * filled_len + '>' + '-' * (bar_len - filled_len)
+        sys.stdout.write('[%s] %s%s%s\r' % (bar, percents, '%', suffix))
+        sys.stdout.flush()
+
+
     def __anonymize(self):
         """Anonymize each entry"""
+        progress_counter = 0
         for entry in self.entries:
             entry.anonymize()
+            progress_counter += 1
+            # print progress bar
+            self.progress(progress_counter, len(self.entries), str("   " + str(progress_counter) + "/" + str(len(self.entries))))
+        print()

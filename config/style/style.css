@@ -1,0 +1,44 @@
+html {
+    width: 100%;
+    min-height: 100%;
+}
+body {
+    width: 100%;
+    min-height: 100%;
+    padding: 0;
+    margin: 0;
+    background-color: #F5F5F5;
+}
+.nav-title {
+    margin-left: -40px;
+}
+#credits-dialog {
+    background-color: yellow;   
+    color: rgb(63, 81, 181);
+}
+.mdl-dialog {
+    width: 600px !important; 
+}
+.fields-container {
+    width: 600px;
+    background-color: white;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+.mdl-list__item {
+    margin-top: 10px;
+    justify-content: center;
+}
+.add-button {
+    background-color: yellow !important;
+    margin-bottom: -27px !important;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23) !important;
+}
+.add-button i {
+    font-size: 30px;
+    font-weight: lighter;
+    color: rgb(63, 81, 181);
+}
+.add-button:active {
+    box-shadow: 0 20px 30px rgba(0,0,0,0.19), 0 10px 10px rgba(0,0,0,0.23) !important;
+    background-color: orange !important;
+}

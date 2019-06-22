@@ -2,7 +2,6 @@
 
 # Libraries
 from modules import *
-from config import Table
 from config import configurator
 from shutil import copyfile
 import argparse
@@ -44,6 +43,7 @@ def main():
             # Anonymize input csv file and export the result
             t = Table.Table(args.anonymize[0], args.anonymize[1])
             t.start()
+            print("Your file has been anonymized!")
 
         elif args.config:
             # Open web browser to edit the configuration file
@@ -53,10 +53,12 @@ def main():
         else:
             # Export the configuration file
             copyfile('./config/config.json', args.save_config[0])
+            print("Configuration file has been exported!")
+
     except Exception as e:
-        print("Fatal error.", e)
+        print("Fatal error! ", e)
     finally:
-        print("Program terminated")
+        print("Program terminated! Goodbye.\n")
 
 
 if __name__ == '__main__':
